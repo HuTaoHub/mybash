@@ -25,7 +25,7 @@ int main()
 		else if(ret == MYCD)
 		{
 			//切换路径
-			//Mycd();
+			Mycd(cmdbuff[1]);
 			free(cmd);
 			cmd = NULL;
 		}
@@ -38,6 +38,7 @@ int main()
 		}
 		else
 		{
+			//进程替换
 			ChildExec(cmdbuff, cmd);
 		}
 		

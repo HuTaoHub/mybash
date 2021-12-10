@@ -40,4 +40,7 @@ void Zombie();
 //判断是否在后台运行
 int IsBack(const char* cmdbuff);
 
+//切换目录
+void Mycd(const char* path);
+
 #endif

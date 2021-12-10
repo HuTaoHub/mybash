@@ -36,8 +36,18 @@ void OutPutInfo()
 	//获取当前工作路径的绝对路径
 	char pathname[128] = {0};
 	getcwd(pathname, 127);
-
-	printf("%s@%s:%s%c",pw->pw_name,buff.nodename, pathname,flg);
+	
+	//家目录的长度
+	int len_homepath = strlen(pw->pw_dir);
+	char* p = pathname + len_homepath;
+	//如果当前的工作路径中包含家目录，就使用"~"替换前面的家目录部分
+	if(strncmp(pathname, pw->pw_dir, len_homepath) == 0)
+	{
+		memset(pathname, 0, len_homepath);
+		strcat(pathname, "~");
+		strcat(pathname, p);
+	}
+	printf("%s@%s:%s%c ",pw->pw_name,buff.nodename, pathname,flg);
 	fflush(stdout);
 }
 
@@ -94,7 +104,7 @@ void ChildExec(char* cmdbuff[], const char* cmd)
 	if(cmdbuff == NULL || cmd == NULL)
 		return;
 	
-	char pathname[128] = {"/home/jiege/mybash/bin"};
+	char pathname[128] = {"/home/jiege/mybash/bin/"};
 	strcat(pathname, cmdbuff[0]);
 
 	//判断是前台/后台运行
@@ -138,4 +148,15 @@ int IsBack(const char* cmd)
 	if(strstr(cmd, "&") != NULL)
 		return 1;
 	return 0;
+}
+
+//切换目录
+void Mycd(const char* path)
+{
+	if(path == NULL)
+		return;
+	if(chdir(path) == -1)
+	{
+		perror("cd err");
+	}
 }

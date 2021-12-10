@@ -7,4 +7,4 @@ $(objects): mybash.h main.c mybash.c
 
 .PHONY:clean
 clean:
-	rm mybash $(objects)
+	rm -f mybash $(objects)
