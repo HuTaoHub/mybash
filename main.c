@@ -2,6 +2,9 @@
 
 int main()
 {
+	//处理后台的僵尸进程
+	signal(SIGCHLD, Zombie);
+
 	char* cmd = NULL;
 	while(1)
 	{	
@@ -35,7 +38,7 @@ int main()
 		}
 		else
 		{
-			ChildExec(cmdbuff);
+			ChildExec(cmdbuff, cmd);
 		}
 		
 	}

@@ -1,9 +1,14 @@
+#ifndef MYBASH_H
+#define MYBASH_H
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
 #include <stdlib.h>
 #include <sys/wait.h>
 #include <sys/types.h>
+#include <signal.h>
+#include <pwd.h>
+#include <sys/utsname.h>
 
 typedef enum returncode
 {
@@ -27,4 +32,12 @@ char* GetCmd();
 returncode CmdResolve(char* cmd, char* cmdbuff[]);
 
 //进程替换
-void ChildExec(char* cmdbuff[]);
+void ChildExec(char* cmdbuff[], const char* cmd);
+
+//处理僵尸进程
+void Zombie();
+
+//判断是否在后台运行
+int IsBack(const char* cmdbuff);
+
+#endif
